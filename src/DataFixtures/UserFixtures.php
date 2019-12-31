@@ -31,6 +31,7 @@ class UserFixtures extends Fixture implements FixtureGroupInterface, OrderedFixt
         $user = new User();
         $user->setApiToken('test_api_token');
         $user->setUsername('test');
+        $user->setRoles(['ROLE_API']);
         $user->setPassword($encoder->encodePassword(
             $user,
             'test'

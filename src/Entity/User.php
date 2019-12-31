@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -14,10 +18,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid", unique=true)
+     * @ApiProperty(identifier=true)
      */
     private $id;
 
     /**
+     *
+     * @Assert\Length(max=180)
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
@@ -28,14 +35,18 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\Length(max=64)
      * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=64, unique=true)
+     * @Assert\Email()
+     * @Assert\Length(max=255)
+     * @Assert\NotNull()
+     * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $apiToken;
+    private $email;
 
     public function getId(): ?int
     {
@@ -86,18 +97,24 @@ class User implements UserInterface
         return (string)$this->password;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getApiToken()
-    {
-        return $this->apiToken;
-    }
-
     public function setPassword(string $password): self
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): self
+    {
+        $this->email = $email;
         return $this;
     }
 
@@ -116,13 +133,5 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @param mixed $apiToken
-     */
-    public function setApiToken($apiToken): void
-    {
-        $this->apiToken = $apiToken;
     }
 }
