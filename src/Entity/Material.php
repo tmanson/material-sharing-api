@@ -7,7 +7,22 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *         "get"={"security"="is_granted('ROLE_MATERIAL_LIST_READ')"},
+ *         "post"={"security"="is_granted('ROLE_MATERIAL_LIST_WRITE')"},
+ *         "put"={"controller"=NotFoundAction::class, "read"=false, "output"=false},
+ *         "patch"={"controller"=NotFoundAction::class, "read"=false, "output"=false},
+ *         "delete"={"controller"=NotFoundAction::class, "read"=false, "output"=false},
+ *     },
+ *     itemOperations={
+ *         "get"={"security"="is_granted('ROLE_MATERIAL_READ')"},
+ *         "post"={"security_post_denormalize"="is_granted('ROLE_MATERIAL_WRITE')"},
+ *         "put"={"security_post_denormalize"="is_granted('ROLE_MATERIAL_WRITE')"},
+ *         "patch"={"security_post_denormalize"="is_granted('ROLE_MATERIAL_WRITE')"},
+ *         "delete"={"security_post_denormalize"="is_granted('ROLE_MATERIAL_WRITE')"},
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\MaterialRepository")
  */
 class Material

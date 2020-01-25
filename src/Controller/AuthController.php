@@ -29,6 +29,7 @@ class AuthController extends AbstractController
         $newUserData['username']    = $request->get('username');
         $newUserData['email']    = $request->get('email');
         $newUserData['password'] = $request->get('password');
+        $newUserData['role'] = $request->get('role');
 
         $user = $this->usersRepository->createNewUser($newUserData);
 

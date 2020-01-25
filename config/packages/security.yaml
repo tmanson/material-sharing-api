@@ -39,3 +39,6 @@ security:
         App\Entity\User:
             algorithm: bcrypt
             cost: 12
+    role_hierarchy:
+        ROLE_MATERIAL_USER: [ROLE_MATERIAL_READ, ROLE_MATERIAL_LIST_READ]
+        ROLE_MATERIAL_ADMIN: [ROLE_MATERIAL_WRITE, ROLE_MATERIAL_LIST_WRITE, ROLE_MATERIAL_USER]

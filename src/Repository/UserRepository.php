@@ -40,7 +40,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user
             ->setUsername($data['username'])
             ->setEmail($data['email'])
-            ->setPassword($this->encoder->encodePassword($user, $data['password']));
+            ->setPassword($this->encoder->encodePassword($user, $data['password']))
+            ->setRoles(array($data['role']));
 
         $this->manager->persist($user);
         $this->manager->flush();
